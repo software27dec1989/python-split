@@ -1,0 +1,25 @@
+import re
+
+input_str = "EMC_VMAX_4DIR_FC_PG13 | FA-1D:10, FA-2D:25, FA-3D:10, FA-4D:25"
+
+# Extract the part after the '|'
+data_part = input_str.split('|')[1].strip()
+
+# Split the data part by commas to get individual director-port pairs
+pairs = data_part.split(',')
+
+# Initialize an empty list to store the output
+output = []
+
+# Iterate over each pair
+for pair in pairs:
+    # Use regular expression to match the director and port
+    match = re.match(r'FA-(\d+D):(\d+)', pair.strip())
+    if match:
+        director = f"FA-{match.group(1)}"
+        port = int(match.group(2))
+        # Append the dictionary to the output list
+        output.append({"director": director, "port": port})
+
+# Print the resulting list of dictionaries
+print(output)
